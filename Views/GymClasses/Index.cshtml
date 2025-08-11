@@ -1,0 +1,28 @@
+@model IEnumerable<GymCollab.Models.GymClass>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h4">Gym Classes</h2>
+  <div>
+    <form method="get" class="d-inline">
+      <input name="q" value="@Context.Request.Query["q"]" class="form-control d-inline" style="width:220px" placeholder="Search name..." />
+    </form>
+    <a class="btn btn-sm btn-primary ms-2" href="/GymClasses/Create">Add Class</a>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead><tr><th>Name</th><th>Trainer</th><th>Schedule</th><th>Capacity</th><th></th></tr></thead>
+  <tbody>
+  @foreach (var c in Model){
+    <tr>
+      <td>@c.Name</td>
+      <td>@c.Trainer</td>
+      <td>@c.DayOfWeek @c.Time</td>
+      <td>@c.Capacity</td>
+      <td>
+        <a class="btn btn-sm btn-outline-secondary" href="/GymClasses/Details/@c.GymClassId">View</a>
+        <a class="btn btn-sm btn-outline-primary" href="/GymClasses/Edit/@c.GymClassId">Edit</a>
+        <a class="btn btn-sm btn-outline-danger" href="/GymClasses/Delete/@c.GymClassId">Delete</a>
+      </td>
+    </tr>
+  }
+  </tbody>
+</table>

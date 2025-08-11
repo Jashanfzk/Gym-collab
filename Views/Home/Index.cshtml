@@ -1,0 +1,106 @@
+@model GymCollab.ViewModels.DashboardVM
+<div class="mb-4">
+  <h1 class="h3">GymCollab Dashboard</h1>
+  <p class="text-muted">Overview of classes, members, and equipment.</p>
+  <div class="row g-3 mt-2">
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <div class="text-muted small">Classes</div>
+          <div class="fs-4 fw-bold">@Model.TotalClasses</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <div class="text-muted small">Members</div>
+          <div class="fs-4 fw-bold">@Model.TotalMembers</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <div class="text-muted small">Equipment</div>
+          <div class="fs-4 fw-bold">@Model.TotalEquipment</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <div class="text-muted small">Enrollments</div>
+          <div class="fs-4 fw-bold">@Model.TotalEnrollments</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">Upcoming Classes</span>
+        <a href="/GymClasses" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <ul class="list-group list-group-flush">
+        @foreach (var c in Model.UpcomingClasses)
+        {
+          <li class="list-group-item d-flex justify-content-between">
+            <span>@c.Name</span>
+            <span class="text-muted small">@c.DayOfWeek @c.Time</span>
+          </li>
+        }
+        @if (!Model.UpcomingClasses.Any())
+        {
+          <li class="list-group-item text-muted">No classes yet.</li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">Recent Members</span>
+        <a href="/Members" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <ul class="list-group list-group-flush">
+        @foreach (var m in Model.RecentMembers)
+        {
+          <li class="list-group-item d-flex justify-content-between">
+            <span>@m.FullName</span>
+            <span class="text-muted small">@m.JoinedOn.ToLocalTime().ToString("yyyy-MM-dd")</span>
+          </li>
+        }
+        @if (!Model.RecentMembers.Any())
+        {
+          <li class="list-group-item text-muted">No members yet.</li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between">
+        <span class="fw-semibold">Popular Equipment</span>
+        <a href="/Equipment" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <ul class="list-group list-group-flush">
+        @foreach (var e in Model.PopularEquipment)
+        {
+          <li class="list-group-item d-flex justify-content-between">
+            <span>@e.Name</span>
+            <span class="text-muted small">Qty: @e.Quantity</span>
+          </li>
+        }
+        @if (!Model.PopularEquipment.Any())
+        {
+          <li class="list-group-item text-muted">No equipment yet.</li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

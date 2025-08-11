@@ -1,0 +1,12 @@
+@model GymCollab.Models.Member
+@{
+    ViewData["Title"] = "Delete Member";
+}
+<h2>Delete Member</h2>
+<div class="alert alert-warning">Are you sure you want to delete <strong>@Model.FullName</strong>?</div>
+<form method="post">
+  <button class="btn btn-danger" type="submit">Yes, delete</button>
+  <a class="btn btn-secondary" href="/Members">Cancel</a>
+</form>
+
+

@@ -1,0 +1,53 @@
+@model GymCollab.ViewModels.ClassDetailsVM
+<div class="d-flex justify-content-between mb-3">
+  <h2 class="h4">Class: @Model.GymClass!.Name</h2>
+  <a class="btn btn-outline-secondary" href="/GymClasses">Back</a>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div><strong>Trainer:</strong> @Model.GymClass.Trainer</div>
+        <div><strong>Schedule:</strong> @Model.GymClass.DayOfWeek @Model.GymClass.Time</div>
+        <div><strong>Capacity:</strong> @Model.GymClass.Capacity</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Assigned Equipment</h5>
+        <ul class="list-group">
+        @foreach (var item in Model.Assigned){
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            @item.Equipment!.Name
+            <span>
+              Qty: @item.QuantityUsed
+              <a class="btn btn-sm btn-outline-danger ms-2" href="/GymClasses/RemoveEquipment/@Model.GymClass.GymClassId?equipmentId=@item.EquipmentId">Remove</a>
+            </span>
+          </li>
+        }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Add / Update Equipment</h5>
+        <form method="post" action="/GymClasses/AddEquipment/@Model.GymClass!.GymClassId">
+          <div class="row g-2">
+            <div class="col-8">
+              <select name="EquipmentId" class="form-select">
+                @foreach(var e in Model.Available){ <option value="@e.EquipmentId">@e.Name</option> }
+              </select>
+            </div>
+            <div class="col-4">
+              <input name="Quantity" type="number" class="form-control" min="1" value="1" />
+            </div>
+          </div>
+          <button class="btn btn-primary mt-2">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

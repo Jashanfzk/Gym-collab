@@ -1,0 +1,32 @@
+@model GymCollab.Models.Member
+@{
+    ViewData["Title"] = "Member Details";
+}
+<h2>@Model.FullName</h2>
+<div class="mb-3 text-muted">Joined @Model.JoinedOn.ToLocalTime().ToString("yyyy-MM-dd")</div>
+<dl class="row">
+  <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.Email</dd>
+  <dt class="col-sm-3">Phone</dt><dd class="col-sm-9">@Model.Phone</dd>
+  <dt class="col-sm-3">Preferred Trainer</dt><dd class="col-sm-9">@Model.PreferredTrainer</dd>
+</dl>
+
+<h4>Enrollments</h4>
+<table class="table table-sm">
+  <thead><tr><th>Class</th><th>Day</th><th>Time</th><th>Trainer</th></tr></thead>
+  <tbody>
+  @foreach (var e in Model.Enrollments.OrderByDescending(x => x.EnrolledOn))
+  {
+      <tr>
+        <td><a href="/GymClasses/Details/@e.GymClassId">@e.GymClass?.Name</a></td>
+        <td>@e.GymClass?.DayOfWeek</td>
+        <td>@e.GymClass?.Time</td>
+        <td>@e.GymClass?.Trainer</td>
+      </tr>
+  }
+  </tbody>
+</table>
+
+<a class="btn btn-secondary" href="/Members">Back</a>
+<a class="btn btn-primary" href="/Members/Edit/@Model.MemberId">Edit</a>
+
+

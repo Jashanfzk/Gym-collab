@@ -1,0 +1,10 @@
+@model GymCollab.Models.Equipment
+<div class="row g-2">
+  <div class="col-md-6"><label class="form-label">Name</label><input asp-for="Name" class="form-control"/></div>
+  <div class="col-md-6"><label class="form-label">Category</label><input asp-for="Category" class="form-control"/></div>
+  <div class="col-md-4"><label class="form-label">Quantity</label><input asp-for="Quantity" type="number" class="form-control"/></div>
+  <div class="col-md-8"><label class="form-label">Supplier</label><input asp-for="Supplier" class="form-control"/></div>
+</div>
+<button class="btn btn-primary mt-3">Save</button>
+<a href="/Equipment" class="btn btn-link">Cancel</a>
+

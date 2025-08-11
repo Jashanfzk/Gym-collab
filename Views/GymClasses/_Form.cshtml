@@ -1,0 +1,26 @@
+@model GymCollab.Models.GymClass
+<div class="row g-2">
+  <div class="col-md-6">
+    <label class="form-label">Name</label>
+    <input asp-for="Name" class="form-control" />
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Trainer</label>
+    <input asp-for="Trainer" class="form-control" />
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Day</label>
+    <input asp-for="DayOfWeek" class="form-control" />
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Time</label>
+    <input asp-for="Time" class="form-control" />
+  </div>
+  <div class="col-md-4">
+    <label class="form-label">Capacity</label>
+    <input asp-for="Capacity" class="form-control" />
+  </div>
+</div>
+<button class="btn btn-primary mt-3">Save</button>
+<a href="/GymClasses" class="btn btn-link">Cancel</a>
+

@@ -1,0 +1,14 @@
+@model GymCollab.Models.Equipment
+<h2 class="h4 mb-3">Equipment: @Model.Name</h2>
+<div class="card card-body mb-3">
+  <div><strong>Category:</strong> @Model.Category</div>
+  <div><strong>Quantity:</strong> @Model.Quantity</div>
+  <div><strong>Supplier:</strong> @Model.Supplier</div>
+</div>
+<h5>Used In Classes</h5>
+<ul class="list-group">
+@foreach (var ce in Model.ClassEquipments){
+  <li class="list-group-item">@ce.GymClass!.Name (Qty: @ce.QuantityUsed)</li>
+}
+</ul>
+<a class="btn btn-secondary mt-3" href="/Equipment">Back</a>
