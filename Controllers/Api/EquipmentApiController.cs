@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymCollab.Controllers.Api
 {
+    /// <summary>
+    /// API controller for managing gym equipment
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class EquipmentApiController : ControllerBase
@@ -13,8 +16,18 @@ namespace GymCollab.Controllers.Api
         private readonly AppDbContext _db;
         public EquipmentApiController(AppDbContext db) { _db = db; }
 
-        [HttpGet] public async Task<IEnumerable<Equipment>> List() => await _db.Equipment.ToListAsync();
+        /// <summary>
+        /// Retrieves all equipment items
+        /// </summary>
+        /// <returns>A list of all equipment</returns>
+        [HttpGet] 
+        public async Task<IEnumerable<Equipment>> List() => await _db.Equipment.ToListAsync();
 
+        /// <summary>
+        /// Finds equipment by ID
+        /// </summary>
+        /// <param name="id">The equipment ID</param>
+        /// <returns>The equipment item if found, otherwise NotFound</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Equipment>> Find(int id)
         {
@@ -22,6 +35,11 @@ namespace GymCollab.Controllers.Api
             return item == null ? NotFound() : item;
         }
 
+        /// <summary>
+        /// Creates a new equipment item
+        /// </summary>
+        /// <param name="input">The equipment data</param>
+        /// <returns>The created equipment with its ID</returns>
         [Authorize, HttpPost]
         public async Task<ActionResult<Equipment>> Create(Equipment input)
         {
@@ -30,6 +48,12 @@ namespace GymCollab.Controllers.Api
             return CreatedAtAction(nameof(Find), new { id = input.EquipmentId }, input);
         }
 
+        /// <summary>
+        /// Updates an existing equipment item
+        /// </summary>
+        /// <param name="id">The equipment ID</param>
+        /// <param name="input">The updated equipment data</param>
+        /// <returns>No content on success</returns>
         [Authorize, HttpPost("{id}")]
         public async Task<IActionResult> Update(int id, Equipment input)
         {
@@ -39,6 +63,11 @@ namespace GymCollab.Controllers.Api
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes an equipment item
+        /// </summary>
+        /// <param name="id">The equipment ID to delete</param>
+        /// <returns>No content on success</returns>
         [Authorize, HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -49,6 +78,11 @@ namespace GymCollab.Controllers.Api
             return NoContent();
         }
 
+        /// <summary>
+        /// Lists all gym classes that use a specific equipment
+        /// </summary>
+        /// <param name="id">The equipment ID</param>
+        /// <returns>A list of class equipment relationships</returns>
         [HttpGet("{id}/classes")]
         public async Task<IEnumerable<ClassEquipment>> ListClasses(int id)
         {
