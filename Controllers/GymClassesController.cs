@@ -7,12 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymCollab.Controllers
 {
+    /// <summary>
+    /// Controller for managing gym classes and related equipment.
+    /// </summary>
     public class GymClassesController : Controller
     {
         private readonly AppDbContext _db;
         public GymClassesController(AppDbContext db) { _db = db; }
 
-        // GET: /GymClasses
+        /// <summary>
+        /// Displays a list of gym classes, with optional search filtering.
+        /// </summary>
         public async Task<IActionResult> Index(string? q)
         {
             var query = _db.GymClasses.AsQueryable();
@@ -25,7 +30,9 @@ namespace GymCollab.Controllers
             return View(list);
         }
 
-        // GET: /GymClasses/Details/5
+        /// <summary>
+        /// Shows details of a specific gym class, including assigned and available equipment.
+        /// </summary>
         public async Task<IActionResult> Details(int id)
         {
             var cls = await _db.GymClasses
@@ -41,9 +48,15 @@ namespace GymCollab.Controllers
             return View(vm);
         }
 
+        /// <summary>
+        /// Displays the form for creating a new gym class.
+        /// </summary>
         [Authorize]
         public IActionResult Create() => View(new GymClass());
 
+        /// <summary>
+        /// Handles submission of a new gym class.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Create(GymClass model)
         {
@@ -53,6 +66,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the form for editing an existing gym class.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
@@ -61,6 +77,9 @@ namespace GymCollab.Controllers
             return View(cls);
         }
 
+        /// <summary>
+        /// Handles submission of changes to an existing gym class.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Edit(int id, GymClass model)
         {
@@ -71,6 +90,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the delete confirmation page for a gym class.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
@@ -79,6 +101,9 @@ namespace GymCollab.Controllers
             return View(cls);
         }
 
+        /// <summary>
+        /// Handles deletion of a gym class after confirmation.
+        /// </summary>
         [Authorize, HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -88,7 +113,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Related CRUD: Add equipment to class
+        /// <summary>
+        /// Assigns equipment to a gym class or updates the quantity if it already exists.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> AddEquipment(int id, ClassDetailsVM vm)
         {
@@ -112,6 +139,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        /// <summary>
+        /// Removes equipment from a gym class.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> RemoveEquipment(int id, int equipmentId)
         {
