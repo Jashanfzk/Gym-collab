@@ -6,11 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymCollab.Controllers
 {
+    /// <summary>
+    /// Controller for managing gym equipment (CRUD operations).
+    /// </summary>
     public class EquipmentController : Controller
     {
         private readonly AppDbContext _db;
         public EquipmentController(AppDbContext db) { _db = db; }
 
+        /// <summary>
+        /// Displays a list of equipment with optional filtering by category or search query.
+        /// </summary>
         public async Task<IActionResult> Index(string? category, string? q)
         {
             var query = _db.Equipment.AsQueryable();
@@ -28,6 +34,9 @@ namespace GymCollab.Controllers
             return View(await query.OrderBy(e => e.Name).ToListAsync());
         }
 
+        /// <summary>
+        /// Shows details for a specific equipment item.
+        /// </summary>
         public async Task<IActionResult> Details(int id)
         {
             var item = await _db.Equipment
@@ -37,8 +46,14 @@ namespace GymCollab.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Displays the create equipment form.
+        /// </summary>
         [Authorize] public IActionResult Create() => View(new Equipment());
 
+        /// <summary>
+        /// Handles creation of new equipment.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Create(Equipment model)
         {
@@ -48,6 +63,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the edit form for a specific equipment item.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
@@ -56,6 +74,9 @@ namespace GymCollab.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Handles updates to an existing equipment item.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Edit(int id, Equipment model)
         {
@@ -66,6 +87,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the delete confirmation view for a specific equipment item.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
@@ -74,6 +98,9 @@ namespace GymCollab.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Handles deletion of equipment after confirmation.
+        /// </summary>
         [Authorize, HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
