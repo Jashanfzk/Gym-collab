@@ -2,11 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymCollab.Controllers
 {
+    /// <summary>
+    /// Controller for handling the home page and dashboard view.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly Data.AppDbContext _db;
         public HomeController(Data.AppDbContext db) { _db = db; }
 
+        /// <summary>
+        /// Displays the dashboard with stats, upcoming classes, popular equipment, and recent members.
+        /// </summary>
         public IActionResult Index()
         {
             var vm = new ViewModels.DashboardVM
