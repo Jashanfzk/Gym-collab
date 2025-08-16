@@ -6,11 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymCollab.Controllers
 {
+    /// <summary>
+    /// Controller for managing gym members.
+    /// </summary>
     public class MembersController : Controller
     {
         private readonly AppDbContext _db;
         public MembersController(AppDbContext db) { _db = db; }
 
+        /// <summary>
+        /// Displays a list of members, optionally filtered by search query.
+        /// </summary>
         public async Task<IActionResult> Index(string? q)
         {
             var query = _db.Members.AsQueryable();
@@ -22,6 +28,9 @@ namespace GymCollab.Controllers
             return View(await query.OrderBy(m => m.FullName).ToListAsync());
         }
 
+        /// <summary>
+        /// Shows details of a specific member including their class enrollments.
+        /// </summary>
         public async Task<IActionResult> Details(int id)
         {
             var m = await _db.Members
@@ -31,8 +40,14 @@ namespace GymCollab.Controllers
             return View(m);
         }
 
+        /// <summary>
+        /// Displays the form for creating a new member.
+        /// </summary>
         [Authorize] public IActionResult Create() => View(new Member());
 
+        /// <summary>
+        /// Handles submission of a new member.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Create(Member model)
         {
@@ -42,6 +57,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the form for editing an existing member.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
@@ -50,6 +68,9 @@ namespace GymCollab.Controllers
             return View(m);
         }
 
+        /// <summary>
+        /// Handles submission of changes to an existing member.
+        /// </summary>
         [Authorize, HttpPost]
         public async Task<IActionResult> Edit(int id, Member model)
         {
@@ -60,6 +81,9 @@ namespace GymCollab.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Displays the delete confirmation view for a member.
+        /// </summary>
         [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
@@ -68,6 +92,9 @@ namespace GymCollab.Controllers
             return View(m);
         }
 
+        /// <summary>
+        /// Handles deletion of a member after confirmation.
+        /// </summary>
         [Authorize, HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -78,5 +105,3 @@ namespace GymCollab.Controllers
         }
     }
 }
-
-
